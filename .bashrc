@@ -119,21 +119,31 @@ get_short_path() {
 }
 
 # parse git information to embed into custom prompt.
+# WARN: this code is untested, and was created by myself as a challenge! there
+# may be better solutons out there...
 get_git_info() {
 	# store current git state as easy-to-parse format.
 	local git_status="$(git status --branch --porcelain=v1 2>/dev/null)"
 
 	# check we are in git repository.
 	if [ -n "$git_status" ]; then
-		# parse the git state into seperate variables.
-		local git_branch=$(sed -nr 's/^## (.+)\.\.\..+/\1/gp' <<< "$git_status")
-		local git_remote=$(sed -nr 's/^## .+\.\.\.(.+)/\1/gp' <<< "$git_status")
-		local git_staged=$(egrep -c '^[MADRC]' <<< "$git_status")
-		local git_unstaged=$(egrep -c '^ [MD]' <<< "$git_status")
-		local git_untracked=$(egrep -c '^\?\?' <<< "$git_status")
+		# NOTE: welcome to the regex of pain. sometimes doing it your own way is harder...
+
+		# perl regex used to capture current branch and remote.
+		local parse_header_perl='print if s/^## ((?:(?!\.\.\.).)+)(?:(?:\.\.\.)(.+))?$/\@/g'
+		
+		# substitute the correct capture into the perl regex and evaluate to get branch and remote.
+		local git_branch=$(perl -ne "${parse_header_perl/@/1}" <<< "$git_status")
+		local git_remote=$(perl -ne "${parse_header_perl/@/2}" <<< "$git_status")
+
+		# parse the remaining git state into variables.
+		local git_staged=$(grep -Ec '^[MADRC]' <<< "$git_status")
+		local git_unstaged=$(grep -Ec '^ [MD]' <<< "$git_status")
+		local git_untracked=$(grep -Ec '^\?\?' <<< "$git_status")
 
 		# construct the git information of the prompt.
 		local git_info="$git_branch"
+		# [ -n $git_remote ] && git_info+="..$git_remote"
 		[ $git_untracked != 0 ] && git_info+=''
 		[ $git_unstaged != 0 ] || [ $git_staged != 0 ] && git_info+='*'
 		echo "$git_info"
