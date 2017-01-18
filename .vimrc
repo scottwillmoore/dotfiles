@@ -7,7 +7,7 @@
 call plug#begin()
 
 " the nord colorscheme.
-Plug 'arcticicestudio/nord-vim', { 'branch': 'improvement/ghi-#11-improve-import-of-lightline-into-tmuxline' }
+Plug 'arcticicestudio/nord-vim'
 
 " a lightweight status line replacement.
 Plug 'itchyny/lightline.vim'
