@@ -200,9 +200,9 @@ build_prompt() {
 	# display the truncated current path.
 	prompt+="${cyan}$(get_short_path) "
 
-	# display git information, if it exists.
+	# display git information, if it exists, and not in home directory.
 	local git_info="$(get_git_info)"
-	if [ "$git_info" ]; then
+	if [ "$git_info" ] && [ "$PWD" != "$HOME" ]; then
 		prompt+="${green}${git_info} "
 	fi
 
