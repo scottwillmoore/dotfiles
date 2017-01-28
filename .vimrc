@@ -21,7 +21,7 @@ let g:tmuxline_powerline_separators = 0
 let g:tmuxline_theme = 'lightline'
 let g:tmuxline_preset = {
 	\ 'a':       '#S',
-	\ 'b':       '#W',
+	\ 'b':       '#W#{?window_zoomed_flag, ^,}',
 	\ 'c':       '%R',
 	\ 'win':     '#I #W',
 	\ 'cwin':    '#I #W',
