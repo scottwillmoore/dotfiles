@@ -87,6 +87,9 @@ alias reset="exec $BASH"
 # reload will preserve the current instance, but does not completely reset instance state.
 alias reload="source $HOME/.bashrc"
 
+# open files and folders from the command line; also hide resulting logs and error messages.
+alias open='xdg-open &>/dev/null'
+
 # host the current directory as static files on port 8000.
 alias webshare='python3 -m http.server'
 
