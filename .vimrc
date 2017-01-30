@@ -31,6 +31,8 @@ let g:tmuxline_preset = {
 	\ 'options': { 'status-justify': 'right' }
 	\ }
 
+Plug 'pangloss/vim-javascript'
+
 " TODO: install and configure plugins.
 " 	easymotion/vim-easymotion
 " 	ctrlpvim/ctrlp.vim
