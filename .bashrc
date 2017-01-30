@@ -75,12 +75,6 @@ export BROWSER=google-chrome-stable
 # ______________________________________________________________________________
 # aliases
 
-# create shortcuts for common ls switches.
-alias l='ls'
-alias ll='ls -lh'
-alias la='ls -A'
-alias lla='ls -lhA'
-
 # reset will replace the current instance with a new instance.
 alias reset="exec $BASH"
 
