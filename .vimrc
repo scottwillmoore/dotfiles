@@ -84,6 +84,9 @@ if has('reltime')
 	set incsearch
 endif
 
+" ensure that backups are copies, which allows webpack-dev-server to work.
+set backupcopy=yes
+
 " highlight all search matches.
 set hlsearch
 
