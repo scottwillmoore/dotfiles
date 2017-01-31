@@ -31,6 +31,8 @@ let g:tmuxline_preset = {
 	\ 'options': { 'status-justify': 'right' }
 	\ }
 
+Plug 'ctrlpvim/ctrlp.vim'
+
 Plug 'pangloss/vim-javascript'
 
 " TODO: install and configure plugins.
@@ -118,6 +120,7 @@ set wildmenu
 
 " ignore completion matches which matches these patterns.
 set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,*/.DS_Store
+set wildignore+=*/node_modules/*
 
 " characters to show hidden characters when in list mode.
 set listchars=tab:>\ ,trail:-,nbsp:+,extends:>,precedes:<
