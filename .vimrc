@@ -31,24 +31,18 @@ let g:tmuxline_preset = {
 	\ 'options': { 'status-justify': 'right' }
 	\ }
 
+" simple, fast path fuzzy finder for files, buffers, etc.
 Plug 'ctrlpvim/ctrlp.vim'
 
-Plug 'pangloss/vim-javascript'
+" improved hard line wrapping when editing text documents.
+Plug 'reedes/vim-pencil'
+augroup pencil
+	autocmd!
+	autocmd FileType markdown,mkd call pencil#init()
+augroup END
 
-" TODO: install and configure plugins.
-" 	easymotion/vim-easymotion
-" 	ctrlpvim/ctrlp.vim
-" 	supertab
-" 	snippets
-" 	fugitive
-" 	vim-go
-" 	syntastic
-" 	tagbar
-" 	comment toggle
-" 	gundo
-" 	vim-surround
-" 	git-gutter
-" 	vim-seek
+" improved support for the javascript language.
+Plug 'pangloss/vim-javascript'
 
 call plug#end()
 
