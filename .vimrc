@@ -33,13 +33,21 @@ let g:tmuxline_preset = {
 
 " simple, fast path fuzzy finder for files, buffers, etc.
 Plug 'ctrlpvim/ctrlp.vim'
+ 
+" allow quick movement around vim buffers.
+Plug 'easymotion/vim-easymotion'
 
-" improved hard line wrapping when editing text documents.
+" improved hard and soft line wrapping.
+" improved spell check and thesaurus completions.
 Plug 'reedes/vim-pencil'
+Plug 'reedes/vim-lexical'
 augroup pencil
 	autocmd!
-	autocmd FileType markdown,mkd call pencil#init()
+	autocmd FileType markdown,mkd call pencil#init({'textwidth': 80})
+	                          \ | call lexical#init()
 augroup END
+let g:lexical#spell_key = '<leader>s'
+let g:lexical#thesaurus_key = '<leader>t'
 
 " improved support for the javascript language.
 Plug 'pangloss/vim-javascript'
@@ -132,6 +140,9 @@ set cursorline
 " allow lines longer than the window to wrap.
 set wrap
 
+" set the languages used for spelling.
+set spelllang=en_au,en_gb
+
 " highlight these keywords in comments.
 autocmd Syntax * call matchadd('Todo',  '\W\zs\(NOTE\|INFO\|IDEA\|TODO\|CHANGED\)')
 autocmd Syntax * call matchadd('Debug', '\W\zs\(FIXME\|XXX\|BUG\|HACK\)')
@@ -139,6 +150,10 @@ autocmd Syntax * call matchadd('Debug', '\W\zs\(FIXME\|XXX\|BUG\|HACK\)')
 
 " ______________________________________________________________________________
 " bindings
+
+" set the leader key to space for quick access.
+noremap <space> <nop>
+let mapleader = "\<space>"
 
 " disable the use of arrow keys.
 noremap <up> <nop>
@@ -154,13 +169,13 @@ vnoremap < <gv
 vnoremap > >gv
 
 " give ctrl-c the same functionality as escape.
-noremap <C-c> <Esc>
+noremap <c-c> <esc>
 
 " allow easier split navigation.
-noremap <C-j> <C-w>j
-noremap <C-k> <C-w>k
-noremap <C-l> <C-w>l
-noremap <C-h> <C-w>h
+noremap <c-j> <c-w>j
+noremap <c-k> <c-w>k
+noremap <c-l> <c-w>l
+noremap <c-h> <c-w>h
 
 " move through wrapped lines, instead of actual lines.
 noremap j gj
