@@ -37,6 +37,9 @@ Plug 'ctrlpvim/ctrlp.vim'
 " allow quick movement around vim buffers.
 Plug 'easymotion/vim-easymotion'
 
+" ensure that vim complies with editorconfigs.
+Plug 'editorconfig/editorconfig-vim'
+
 " improved hard and soft line wrapping.
 " improved spell check and thesaurus completions.
 Plug 'reedes/vim-pencil'
