@@ -99,7 +99,16 @@ set hlsearch
 
 " indent to same level as previous line.
 set autoindent
-"
+
+" set the tab size to 4 characters.
+set tabstop=4
+
+" adjust indents by 4 characters.
+set shiftwidth=4
+
+" expand tab presses into spaces.
+set expandtab
+
 " allow backspacing over everything in insert mode.
 set backspace=indent,eol,start
 
