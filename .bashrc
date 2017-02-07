@@ -197,9 +197,9 @@ build_prompt() {
 	# display the truncated current path.
 	prompt+="${cyan}$(get_short_path) "
 
-	# display git information, if it exists, and not in home directory.
+	# display git information, if it exists, and is not the dotfiles repository.
 	local git_info="$(get_git_info)"
-	if [ "$git_info" ] && [ "$PWD" != "$HOME" ]; then
+    if [ "$git_info" ] && [ $(git rev-parse --show-toplevel) != "$HOME" ]; then
 		prompt+="${green}${git_info} "
 	fi
 
