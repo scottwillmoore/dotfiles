@@ -120,7 +120,7 @@ get_short_path() {
 # may be better solutons out there...
 get_git_info() {
 	# store current git state as easy-to-parse format.
-	local git_status="$(git status --branch --porcelain=v1 2>/dev/null)"
+	local git_status="$(git status --branch --porcelain 2>/dev/null)"
 
 	# check we are in git repository.
 	if [ -n "$git_status" ]; then
