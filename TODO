@@ -18,6 +18,9 @@ new
  -> wallpaper : my wallpapers
  -> fish : learn fish shell ?
 
+misc
+ -> setup .gitignore to hide extraneous vim files
+
 inspiration
  -> https://github.com/alexpearce/dotfiles
  -> https://github.com/cowboy/dotfiles
