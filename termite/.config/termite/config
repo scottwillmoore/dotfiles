@@ -2,7 +2,7 @@
 # author: scott moore
 
 [options]
-font = Iosevka Term 12
+font = Iosevka Term 11
 cursor_shape = block
 cursor_blink = on
 geometry = 800x500
