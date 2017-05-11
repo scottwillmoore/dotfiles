@@ -1,0 +1,26 @@
+installation
+ -> use stow to manage installation
+ -> create install script to pre-allocate directories, then use stow
+ -> create script to automatically initialise vim plugins
+ -> investigate git hooks for instant installation
+
+independence
+ -> can be easily installed on most platforms, machines
+ -> extendable with .bashrc.local, .vimrc.local, etc
+
+secrets
+ -> create a non-tracked secrets configuration file
+ -> insert secrets using scripts, templates file ?
+
+new
+ -> bin : used for custom scripts
+ -> git : git configuration
+ -> wallpaper : my wallpapers
+ -> fish : learn fish shell ?
+
+inspiration
+ -> https://github.com/alexpearce/dotfiles
+ -> https://github.com/cowboy/dotfiles
+ -> https://github.com/thoughtbot/dotfiles
+ -> https://github.com/joedicastro/dotfiles
+ -> https://github.com/alrra/dotfiles
