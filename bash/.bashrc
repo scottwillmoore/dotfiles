@@ -1,12 +1,10 @@
 # file: .bashrc
 # author: scott moore
 
-# TODO: use vim as PAGER.
-
 # stop executing if this is not an interactive session.
 [[ $- != *i* ]] && return
 
-# enable colour support of ls and other tools.
+# enable colors throughout shell programs.
 if [ -x /usr/bin/dircolors ]; then
 	# load custom dircolors definitions.
 	[ -e $HOME/.dircolors ] && eval $(dircolors $HOME/.dircolors)
@@ -24,23 +22,17 @@ fi
 # set completion to be case insensitive.
 bind 'set completion-ignore-case on'
 
-# treat underscores and hypthens as equivelent during completion.
-bind 'set completion-map-case on'
-
 # show all possible matches for ambiguous patterns at the first keypress, rather than the second.
 bind 'set show-all-if-ambiguous on'
 
-# immediately add a trailing slash when autocompleting symlinks to directories.
-bind 'set mark-symlinked-directories on'
+# treat underscores and hypthens as equivelent during completion.
+bind 'set completion-map-case on'
 
-# perform history expansion on the current line when inserting a space.
-bind Space:magic-space
+# save multiline commands as a single history entry.
+shopt -s cmdhist
 
 # append to the history file, don't overwrite it.
 shopt -s histappend
-
-# save multiple-line commands in the same history entry.
-shopt -s cmdhist
 
 # use a large history, does not appear to have negative performance impacts.
 HISTSIZE=10000
@@ -49,55 +41,38 @@ HISTFILESIZE=10000
 # avoid duplicate entries.
 HISTCONTROL='erasedups:ignoreboth'
 
-# don't record common commands.
-HISTIGNORE="ls:exit:history"
-
-# show history with the following timestamp format.
-HISTTIMEFORMAT='%F %T  '
-
 # use a custom prompt, which is defined at the bottom of this file.
-PROMPT_COMMAND="build_prompt; set_title"
+PROMPT_COMMAND="build_prompt"
 
-# ______________________________________________________________________________
-# variables
-
-# set default pager.
-export PAGER=less
+# extend path to include various user directories.
+export PATH=$PATH:$HOME/.local/bin:$HOME/bin
 
 # set default text editor.
 export EDITOR=vim
 export VISUAL=vim
 
 # set default web browser.
-export BROWSER=google-chrome-stable
+export BROWSER=google-chrome
 
 
 # ______________________________________________________________________________
 # aliases
 
-# reset will replace the current instance with a new instance.
+# replace the current bash instance with a new bash instance.
 alias reset="exec $BASH"
 
-# reload will preserve the current instance, but does not completely reset instance state.
+# preserve the current bash instance, however attempt to resource the bashrc.
 alias reload="source $HOME/.bashrc"
 
-# open files and folders from the command line; also hide resulting logs and error messages.
+# open the given file or folder with the default application.
 alias open='xdg-open &>/dev/null'
 
-# host the current directory as static files on port 8000.
+# serve the current directory as static files.
 alias serve='python3 -m http.server'
 
 
 # ______________________________________________________________________________
 # functions
-
-# TODO: refine the show_todo tracker.
-show_todo() {
-	local dotfiles=('.bashrc' '.vimrc' '.tmux.conf')
-	grep --color=always -n "TODO:" "${dotfiles[@]}" |\
-		grep --color=always -v 'grep --color=always' |\
-		column -t -s ':' -o '    '
-}
 
 # bootstrap man in order to color man pages.
 man() {
@@ -110,14 +85,13 @@ man() {
 	command man "$@"
 }
 
-# truncate the current path, by shortening parent directories to single characters.
+# truncate the current path by displaying parent directories as single letters.
 get_short_path() {
 	echo -n "$(pwd |sed -e "s!$HOME!~!" | sed -re 's!([^/])[^/]+/!\1/!g')"
 }
 
 # parse git information to embed into custom prompt.
-# WARN: this code is untested, and was created by myself as a challenge! there
-# may be better solutons out there...
+# WARN: this code is untested, and was created by myself as a challenge!
 get_git_info() {
 	# store current git state as easy-to-parse format.
 	local git_status="$(git status --branch --porcelain 2>/dev/null)"
@@ -147,24 +121,6 @@ get_git_info() {
 	fi
 }
 
-set_title() {
-	# create empty title.
-	local title=''
-
-	# if connected using SSH, display hostname.
-	if [ "$SSH_CONNECTION" ]; then
-		title+="@${HOSTNAME} "
-	fi
-
-	# display the truncated current path.
-	title+="$(get_short_path)"
-
-	# allocate the custom title if supported by terminal.
-	if [ "$(tput tsl)" ]; then
-		echo -n "$(tput tsl)${title}$(tput fsl)"
-	fi
-}
-
 # build a customised bash prompt.
 build_prompt() {
 	# store previous exit codes, so that user can be alerted to errors.
@@ -186,10 +142,10 @@ build_prompt() {
 	# create empty prompt.
 	local prompt=''
 
-	# display current logged in user.
-	# prompt+="${cyan}${USER} "
+	# display the current user.
+	#prompt+="${cyan}${USER} "
 
-	# if connected using SSH, display hostname.
+	# when connected using ssh, display the hostname.
 	if [ "$SSH_CONNECTION" ]; then
 		prompt+="${yellow}@${HOSTNAME} "
 	fi
@@ -199,7 +155,7 @@ build_prompt() {
 
 	# display git information, if it exists, and is not the dotfiles repository.
 	local git_info="$(get_git_info)"
-    if [ "$git_info" ] && [ $(git rev-parse --show-toplevel) != "$HOME" ]; then
+	if [ "$git_info" ] && [ $(git rev-parse --show-toplevel) != "$HOME" ]; then
 		prompt+="${green}${git_info} "
 	fi
 
