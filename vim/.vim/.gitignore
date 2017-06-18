@@ -1,0 +1,5 @@
+*
+!.gitignore
+!autoload/plug.vim
+!backup/.keep
+!swap/.keep
