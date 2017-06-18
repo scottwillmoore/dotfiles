@@ -1,5 +1,14 @@
-*
+/*
 !.gitignore
+
+!autoload/
+autoload/*
 !autoload/plug.vim
+
+!backup/
+backup/*
 !backup/.keep
+
+!swap/
+swap/*
 !swap/.keep
