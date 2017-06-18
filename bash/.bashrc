@@ -1,15 +1,22 @@
 # file: .bashrc
 # author: scott moore
 
-# stop executing if this is not an interactive session.
-[[ $- != *i* ]] && return
+# exit if this is not an interactive session.
+if [[ $- != *i* ]]; then
+    return
+fi
 
-# enable colors throughout shell programs.
+# enable bash completion if it is installed.
+if [ -f /etc/profile.d/bash_completion.sh ]; then
+    . /etc/profile.d/bash_completion.sh
+fi
+
+# enable colors for common terminal commands.
 if [ -x /usr/bin/dircolors ]; then
-	# load custom dircolors definitions.
-	[ -e $HOME/.dircolors ] && eval $(dircolors $HOME/.dircolors)
+    if [ -e $HOME/.dircolors ]; then
+        eval $(dircolors $HOME/.dircolors)
+    fi
 
-	# enable the use of colors.
 	alias ls='ls --color=auto'
 	alias grep='grep --color=auto'
 	alias fgrep='fgrep --color=auto'
