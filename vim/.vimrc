@@ -31,29 +31,8 @@ let g:tmuxline_preset = {
 	\ 'options': { 'status-justify': 'right' }
 	\ }
 
-" simple, fast path fuzzy finder for files, buffers, etc.
-Plug 'ctrlpvim/ctrlp.vim'
- 
-" allow quick movement around vim buffers.
-Plug 'easymotion/vim-easymotion'
-
 " ensure that vim complies with editorconfigs.
 Plug 'editorconfig/editorconfig-vim'
-
-" improved hard and soft line wrapping.
-" improved spell check and thesaurus completions.
-Plug 'reedes/vim-pencil'
-Plug 'reedes/vim-lexical'
-augroup pencil
-	autocmd!
-	autocmd FileType markdown,mkd call pencil#init({'textwidth': 80})
-	                          \ | call lexical#init()
-augroup END
-let g:lexical#spell_key = '<leader>s'
-let g:lexical#thesaurus_key = '<leader>t'
-
-" improved support for the javascript language.
-Plug 'pangloss/vim-javascript'
 
 call plug#end()
 
@@ -76,10 +55,11 @@ endif
 " turn on syntax highlighting.
 if has('syntax') && !exists('g:syntax_on')
 	syntax enable
+
+	" attempt to set colorscheme, suppress any errors on failure.
+	silent! colorscheme nord
 endif
 
-" attempt to set colorscheme, and suppress error messages.
-silent! colorscheme nord
 
 " enable the use of mouse for all modes.
 if has('mouse')
@@ -133,7 +113,7 @@ set laststatus=2
 set wildmenu
 
 " ignore completion matches which matches these patterns.
-set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,*/.DS_Store
+set wildignore+=*/.git/*,*/.hg/*,*/.svn/*
 set wildignore+=*/node_modules/*
 
 " characters to show hidden characters when in list mode.
