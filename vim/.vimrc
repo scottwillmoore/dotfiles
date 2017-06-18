@@ -171,3 +171,12 @@ noremap <c-h> <c-w>h
 " move through wrapped lines, instead of actual lines.
 noremap j gj
 noremap k gk
+
+" ______________________________________________________________________________
+" source
+
+" load custom configuration hook if it exists.
+" this needs to be at the bottom of the file.
+if !empty(glob("$HOME/.vimrc.local"))
+    source $HOME/.vimrc.local
+endif

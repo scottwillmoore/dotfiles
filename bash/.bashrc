@@ -23,6 +23,7 @@ if [ -x /usr/bin/dircolors ]; then
 	alias egrep='egrep --color=auto'
 fi
 
+
 # ______________________________________________________________________________
 # configuration
 
@@ -180,3 +181,13 @@ build_prompt() {
 	# allocate the custom prompt.
 	PS1="$prompt"
 }
+
+
+# ______________________________________________________________________________
+# source
+
+# load custom configuration hook if it exists.
+# this needs to be at the bottom of the file.
+if [ -f $HOME/.bashrc.local ]; then
+    . $HOME/.bashrc.local
+fi
