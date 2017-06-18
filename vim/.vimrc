@@ -55,11 +55,7 @@ endif
 " turn on syntax highlighting.
 if has('syntax') && !exists('g:syntax_on')
 	syntax enable
-
-	" attempt to set colorscheme, suppress any errors on failure.
-	silent! colorscheme nord
 endif
-
 
 " enable the use of mouse for all modes.
 if has('mouse')
@@ -70,6 +66,9 @@ endif
 if has('reltime')
 	set incsearch
 endif
+
+" attempt to set colorscheme, suppress any errors on failure.
+silent! colorscheme nord
 
 " ensure that backups are copies, which allows webpack-dev-server to work.
 set backupcopy=yes
