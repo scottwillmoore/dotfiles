@@ -3,5 +3,5 @@
 
 # use the same configuration for logon and non-logon shells.
 if [ -f ~/.bashrc ]; then
-	source ~/.bashrc
+	. ~/.bashrc
 fi
