@@ -6,9 +6,9 @@ if [[ $- != *i* ]]; then
 	return
 fi
 
-# enable bash completion if it is installed.
-if [ -f /etc/profile.d/bash_completion.sh ]; then
-    . /etc/profile.d/bash_completion.sh
+# source global definitions.
+if [ -f /etc/bashrc ]; then
+    . /etc/bashrc
 fi
 
 # enable colors for common terminal commands.
@@ -50,7 +50,7 @@ HISTFILESIZE=10000
 HISTCONTROL='erasedups:ignoreboth'
 
 # use a custom prompt, which is defined at the bottom of this file.
-PROMPT_COMMAND="build_prompt"
+PROMPT_COMMAND="$PROMPT_COMMAND;build_prompt"
 
 # extend path to include various user directories.
 export PATH=$PATH:$HOME/.local/bin:$HOME/bin
