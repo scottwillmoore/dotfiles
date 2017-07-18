@@ -3,7 +3,7 @@
 
 # exit if this is not an interactive session.
 if [[ $- != *i* ]]; then
-    return
+	return
 fi
 
 # enable bash completion if it is installed.
@@ -13,9 +13,9 @@ fi
 
 # enable colors for common terminal commands.
 if [ -x /usr/bin/dircolors ]; then
-    if [ -e $HOME/.dircolors ]; then
-        eval $(dircolors $HOME/.dircolors)
-    fi
+	if [ -e $HOME/.dircolors ]; then
+		eval $(dircolors $HOME/.dircolors)
+	fi
 
 	alias ls='ls --color=auto'
 	alias grep='grep --color=auto'
@@ -189,5 +189,5 @@ build_prompt() {
 # load custom configuration hook if it exists.
 # this needs to be at the bottom of the file.
 if [ -f $HOME/.bashrc.local ]; then
-    . $HOME/.bashrc.local
+	. $HOME/.bashrc.local
 fi
