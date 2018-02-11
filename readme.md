@@ -2,6 +2,8 @@
 
 My lean and mean dotfiles.
 
+![screenshot of dotfiles](https://raw.githubusercontent.com/scottwillmoore/dotfiles/master/screenshot.png)
+
 ## Todo
 
 #### Write a robust installation script
@@ -12,6 +14,8 @@ It should be extremely safe.
 
 #### Make the Git status inside the Bash prompt work.
 
+#### Fill out the features section of the readme
+
 ## Features
 
 #### Bash
@@ -21,6 +25,8 @@ It should be extremely safe.
 #### Tmux
 
 #### Dircolors
+
+#### Tilix
 
 ## Installation
 
