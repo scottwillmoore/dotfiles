@@ -1,8 +1,0 @@
-{
-    "settings": {
-
-    },
-    "files": [
-        { "src": "bash_profile", "dst": ".bash_profile" }
-    ]
-}
