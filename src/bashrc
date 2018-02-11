@@ -1,0 +1,6 @@
+# . B A S H R C
+
+
+# use the same configuration for both logon and non-logon shells.
+[[ -f ~/.bash_profile ]] && . ~/.bash_profile
+

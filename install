@@ -1,0 +1,35 @@
+#!/bin/bash
+
+SRC="$(dirname "$(readlink -m "$0")")/src"
+
+function link {
+    echo "$SRC/$1"
+    if [[ -e "$SRC/$1" ]]; then
+        echo "link: $1 -> $2"
+        mkdir -p "$(dirname "$HOME/$2")"
+        ln -is "$SRC/$1" "$HOME/$2"
+    else
+        echo "link: couldn't find ./src/$1"
+    fi
+}
+
+function copy {
+    if [[ -e "$SRC/$1" ]]; then
+        echo "copy: $1 -> $2"
+        mkdir -p "$(dirname "$HOME/$2")"
+        cp -ir "$SRC/$1" "$HOME/$2"
+    else
+        echo "copy: couldn't find ./src/$1"
+    fi
+}
+
+link {,.}bash_profile
+link {,.}bashrc
+link {,.}dircolors
+link {,.config/tilix/schemes/}nord.json
+link {,.}tmux.conf
+link {,.}tmux.theme
+link {,.}vimrc
+
+copy {,.}gitconfig
+

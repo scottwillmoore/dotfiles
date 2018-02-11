@@ -1,8 +1,14 @@
-" name: .vimrc
-" author: scott moore
+" . V I M R C
 
-" ______________________________________________________________________________
-" plugins
+
+"   P L U G I N S
+
+" automatically install vim-plug.
+if empty(glob('~/.vim/autoload/plug.vim'))
+	silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+		\ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+	autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
 
 call plug#begin()
 
@@ -37,14 +43,16 @@ Plug 'editorconfig/editorconfig-vim'
 call plug#end()
 
 
-" ______________________________________________________________________________
-" settings
+"   S E T T I N G S
 
 " disable compatibility mode.
 set nocompatible
 
 " set better swap and backup directory.
+" both directories are created if they do not exist.
+silent !mkdir $HOME/.vim/swap > /dev/null 2>&1
 set directory=$HOME/.vim/swap//
+silent !mkdir $HOME/.vim/backup > /dev/null 2>&1
 set backupdir=$HOME/.vim/backup//
 
 " turn on file type detection.
@@ -139,8 +147,7 @@ autocmd Syntax * call matchadd('Todo',  '\W\zs\(NOTE\|INFO\|IDEA\|TODO\|CHANGED\
 autocmd Syntax * call matchadd('Debug', '\W\zs\(FIXME\|XXX\|BUG\|HACK\)')
 
 
-" ______________________________________________________________________________
-" bindings
+"   B I N D I N G S
 
 " set the leader key to space for quick access.
 noremap <space> <nop>
@@ -172,11 +179,11 @@ noremap <c-h> <c-w>h
 noremap j gj
 noremap k gk
 
-" ______________________________________________________________________________
-" source
 
-" load custom configuration hook if it exists.
-" this needs to be at the bottom of the file.
+"   S O U R C E
+
+" load local hook for device specific configuration.
+" NOTE: this needs to be sourced at the bottom of the file.
 if !empty(glob("$HOME/.vimrc.local"))
     source $HOME/.vimrc.local
 endif
