@@ -3,14 +3,14 @@
 SRC="$(dirname "$(readlink -m "$0")")/src"
 
 function link {
-    echo "$SRC/$1"
     if [[ -e "$SRC/$1" ]]; then
         echo "link: $1 -> $2"
         mkdir -p "$(dirname "$HOME/$2")"
         ln -is "$SRC/$1" "$HOME/$2"
     else
-        echo "link: couldn't find ./src/$1"
+        echo "link: couldn't find $SRC/$1"
     fi
+    echo
 }
 
 function copy {
@@ -19,9 +19,16 @@ function copy {
         mkdir -p "$(dirname "$HOME/$2")"
         cp -ir "$SRC/$1" "$HOME/$2"
     else
-        echo "copy: couldn't find ./src/$1"
+        echo "copy: couldn't find $SRC/$1"
     fi
+    echo
 }
+
+cat << EOF
+
+install: @scottwillmoore dotfiles
+
+EOF
 
 link {,.}bash_profile
 link {,.}bashrc
