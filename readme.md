@@ -16,6 +16,8 @@ It should be extremely safe.
 
 #### Fill out the features section of the readme.
 
+#### Normalize indent style and line endings.
+
 ## Features
 
 #### Bash
