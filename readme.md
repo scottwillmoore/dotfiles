@@ -6,7 +6,7 @@ My lean and mean dotfiles.
 
 ## Todo
 
-#### Write a robust installation script
+#### Write a robust installation script.
 It should accept a JSON file describing how to install the dotfiles.  
 It should allow easy installation of dotfiles.  
 It should be cross-platform.  
@@ -14,7 +14,7 @@ It should be extremely safe.
 
 #### Make the Git status inside the Bash prompt work.
 
-#### Fill out the features section of the readme
+#### Fill out the features section of the readme.
 
 ## Features
 
