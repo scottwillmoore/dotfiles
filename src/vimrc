@@ -3,9 +3,9 @@
 
 "   P L U G I N S
 
-" automatically install vim-plug.
-if empty(glob('~/.vim/autoload/plug.vim'))
-	silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+" automatically install vim-plug if it does not exist.
+if empty(glob($HOME.'/.vim/autoload/plug.vim'))
+	silent !curl -fLo "$HOME/.vim/autoload/plug.vim" --create-dirs
 		\ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 	autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
@@ -50,9 +50,13 @@ set nocompatible
 
 " set better swap and backup directory.
 " both directories are created if they do not exist.
-silent !mkdir $HOME/.vim/swap > /dev/null 2>&1
+if !isdirectory($HOME.'/.vim/swap')
+    silent call mkdir($HOME.'/.vim/swap', 'p')
+endif
 set directory=$HOME/.vim/swap//
-silent !mkdir $HOME/.vim/backup > /dev/null 2>&1
+if !isdirectory($HOME.'/.vim/backup')
+    silent call mkdir($HOME'/.vim/backup', 'p')
+endif
 set backupdir=$HOME/.vim/backup//
 
 " turn on file type detection.
