@@ -55,7 +55,7 @@ if !isdirectory($HOME.'/.vim/swap')
 endif
 set directory=$HOME/.vim/swap//
 if !isdirectory($HOME.'/.vim/backup')
-    silent call mkdir($HOME'/.vim/backup', 'p')
+    silent call mkdir($HOME.'/.vim/backup', 'p')
 endif
 set backupdir=$HOME/.vim/backup//
 
