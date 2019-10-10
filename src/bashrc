@@ -1,6 +1,155 @@
 # . B A S H R C
 
 
-# use the same configuration for both logon and non-logon shells.
-[[ -f ~/.bash_profile ]] && . ~/.bash_profile
+# Exit if this is a non-interactive prompt.
+[[ -z $PS1 ]] && return
 
+# Enable bash completion.
+# Some distributions use a profile.d script.
+[[ -x /etc/bash_completion ]] && . /etc/bash_completion
+[[ -x /etc/profile.d/bash_completion.sh ]] && . /etc/profile.d/bash_completion.sh
+
+# Load dircolors configuration.
+[[ -x ~/.dircolors ]] && eval $(dircolors ~/.dircolors)
+
+
+#   O P T I O N S
+
+# Execution of a directory will change into that directory.
+shopt -s autocd
+
+# Minor errors in spelling of directories are corrected.
+shopt -s cdspell
+
+# Allow ** to be used for recursive directory expansion.
+shopt -s globstar
+
+# Treat path expansion as case-insensitive.
+shopt -s nocaseglob
+
+# Append to the history file, don't overwrite it.
+shopt -s histappend
+
+
+#   E X P O R T S
+
+# Add user binaries in ~/bin to the path.
+export PATH="$HOME/bin:$PATH"
+
+# Set the default text editor to Vim.
+export EDITOR=vim
+export VISUAL=vim
+
+# Increase the size of the history.
+export HISTSIZE=32768
+export HISTFILESIZE=${HISTSIZE}
+
+# Omit duplicates entries in bash history.
+export HISTCONTROL=ignoredups
+
+
+#   A L I A S E S
+
+# Allow sudo to be used with other aliases.
+alias sudo='sudo '
+
+# Enable colors for common utilities.
+alias ls='ls --color=auto --group-directories-first'
+alias grep='grep --color=auto'
+alias fgrep='fgrep --color=auto'
+alias egrep='egrep --color=auto'
+
+# Shortcuts for traversing up directories.
+alias ..='cd ..'
+alias ...='cd ../..'
+alias ....='cd ../../..'
+alias .....='cd ../../../..'
+
+# Shortcuts for listing directory contents.
+alias la='ls -A'
+alias ll='ls  -Ahl'
+
+# Reload the current .bashrc.
+alias reload=". $HOME/.bashrc"
+
+
+#   F U N C T I O N S
+
+# Show coloured man pages.
+function man {
+    LESS_TERMCAP_me=$(tput sgr0) \
+    LESS_TERMCAP_md=$(tput bold) \
+    LESS_TERMCAP_so=$(tput smso) \
+    LESS_TERMCAP_se=$(tput rmso; tput sgr0) \
+    LESS_TERMCAP_us=$(tput smul) \
+    LESS_TERMCAP_ue=$(tput rmul; tput sgr0) \
+    command man "$@"
+}
+
+
+#   P R O M P T
+
+# [scott@air240] [~/code/dotfiles] [master:!?]
+# [11:14:45] $
+
+# Cache the prompt colours.
+rst="\[$(tput sgr0)\]"
+tsl="\[$(tput tsl)\]"
+fsl="\[$(tput fsl)\]"
+for ((i=1; i<=7; i++)); do
+    declare "fg${i}"="\[$(tput setaf ${i})\]"
+done
+
+#function __short_pwd {
+#    echo "$PWD" | sed -r 's|/([^/]{,1})[^/]*|/\1|g'
+#}
+
+# https://stackoverflow.com/questions/3497885/code-challenge-bash-prompt-path-shortener
+function __short_pwd {
+    local p=${1/#$HOME/\~} b s
+    s=${#p}
+    while [[ $p != "${p//\/}" ]]&&(($s>$2))
+    do
+        p=${p#/}
+        [[ $p =~ \.?. ]]
+        b=$b/${BASH_REMATCH[0]}
+        p=${p#*/}
+        ((s=${#b}+${#p}))
+    done
+    echo ${b/\/~/\~}${b+/}$p
+}
+
+# Define a function to build the prompt.
+# NOTE: The git functionality still needs to be implemented.
+function __prompt {
+    local exit_code=$?
+    PS1="${rst}"
+
+    PS1+="\[\033]2;Bash \w\007\]"
+
+    PS1+="[${fg6}\u@\h${rst}] "
+
+    local short_pwd="$(__short_pwd "$PWD" 60)"
+    
+    PS1+="[${fg4}${short_pwd}${rst}] "
+    # PS1+="[${fg5}master${rst}] "
+    PS1+="\n"
+    if [[ "$exit_code" -eq 0 ]]; then
+        PS1+="[${fg2}\t${rst}] "
+    else
+        PS1+="[${fg1}\t${rst}] "
+    fi
+    PS1+="\$ "
+}
+
+# Use a prompt command to update dynamic prompt elements.
+PROMPT_COMMAND="__prompt"
+
+
+#   S O U R C E
+
+# Load local hook for device specific configuration.
+# This needs to be sourced at the bottom of the file.
+if [ -f $HOME/.bashrc.local ]; then
+    . $HOME/.bashrc.local
+fi

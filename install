@@ -33,9 +33,9 @@ EOF
 link {,.}bash_profile
 link {,.}bashrc
 link {,.}dircolors
-link {,.config/tilix/schemes/}nord.json
-link {,.}tmux.conf
-link {,.}tmux.theme
+# link {,.config/tilix/schemes/}nord.json
+# link {,.}tmux.conf
+# link {,.}tmux.theme
 link {,.}vimrc
 
 copy {,.}gitconfig

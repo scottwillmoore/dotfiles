@@ -3,191 +3,110 @@
 
 "   P L U G I N S
 
-" automatically install vim-plug if it does not exist.
+" Install vim-plug if it is not already installed.
 if empty(glob($HOME.'/.vim/autoload/plug.vim'))
 	silent !curl -fLo "$HOME/.vim/autoload/plug.vim" --create-dirs
 		\ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 	autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
+" Install and configure plugins.
 call plug#begin()
 
-" the nord colorscheme.
-Plug 'arcticicestudio/nord-vim'
-
-" a lightweight status line replacement.
+" A lightweight status line replacement.
 Plug 'itchyny/lightline.vim'
-let g:lightline = {
-	\ 'colorscheme': 'nord'
-	\ }
-
-" generate tmux status line using vim status line.
-Plug 'edkolev/tmuxline.vim'
-let g:tmuxline_powerline_separators = 0
-let g:tmuxline_theme = 'lightline'
-let g:tmuxline_preset = {
-	\ 'a':       '#S',
-	\ 'b':       '#W#{?window_zoomed_flag, ^,}',
-	\ 'c':       '%R',
-	\ 'win':     '#I #W',
-	\ 'cwin':    '#I #W',
-	\ 'x':       '',
-	\ 'y':       '',
-	\ 'z':       '',
-	\ 'options': { 'status-justify': 'right' }
-	\ }
-
-" ensure that vim complies with editorconfigs.
-Plug 'editorconfig/editorconfig-vim'
 
 call plug#end()
 
 
-"   S E T T I N G S
+"   O P T I O N S
 
-" disable compatibility mode.
-set nocompatible
+set nocompatible    " Disable Vi compatibility mode.
 
-" set better swap and backup directory.
-" both directories are created if they do not exist.
-if !isdirectory($HOME.'/.vim/swap')
-    silent call mkdir($HOME.'/.vim/swap', 'p')
+set wrap            " Wrap longer lines onto the next line.
+set ruler           " Show the line and column of the cursor position.
+set number          " Precede each line with its line number.
+
+set scrolloff=3     " Minimal number of lines to keep above, below of the cursor.
+set sidescrolloff=3 " Minimal number of lines to keep left, right of the cursor.
+set laststatus=2    " Always show a status line.
+
+set autoindent      " New lines use indentation from previous lines.
+set smartindent     " Use additional rules to determine when to indent.
+
+set hlsearch        " Highlight all matches of the search pattern.
+set incsearch       " Highlight matches as search patterns are typed.
+set ignorecase      " Ignore the case of search patterns.
+set smartcase       " Only ignore the case while the search pattern contains lowercase letters.
+
+set expandtab       " Expand <Tab> into spaces.
+set tabstop=4       " The number of spaces that a <Tab> is equivelent.
+set softtabstop=4   " The number of spaces that are inserted on <Tab>.
+set shiftwidth=4    " The number of spaces used for indentation.
+
+set splitright      " New vertical splits are placed right not left.
+set splitbelow      " New horizontal splits are placed below not above.
+
+" Make backspace work as expected.
+set backspace=indent,eol,start
+
+" Set the spelling language to Australian English.
+set spelllang=en_au,en_gb
+
+" Use these characters to display hidden characters.
+set listchars=tab:>\ ,trail:-,nbsp:+,extends:>,precedes:<
+
+" Enable syntax highlighting.
+if has('syntax') && !exists('g:syntax_on')
+    syntax enable
 endif
-set directory=$HOME/.vim/swap//
+
+" Enable filetype detection and specific indentation.
+if has('autocmd')
+	filetype plugin indent on
+endif
+
+" Enable mouse interactivity in all modes.
+if has('mouse')
+endif
+
+" Set a better backup directory. Create it if it does not exist.
 if !isdirectory($HOME.'/.vim/backup')
     silent call mkdir($HOME.'/.vim/backup', 'p')
 endif
 set backupdir=$HOME/.vim/backup//
 
-" turn on file type detection.
-if has('autocmd')
-	filetype plugin indent on
+" Set a better swap directory. Create it if it does not exist.
+if !isdirectory($HOME.'/.vim/swap')
+    silent call mkdir($HOME.'/.vim/swap', 'p')
 endif
-
-" turn on syntax highlighting.
-if has('syntax') && !exists('g:syntax_on')
-	syntax enable
-endif
-
-" enable the use of mouse for all modes.
-if has('mouse')
-	set mouse=a
-endif
-
-" show search pattern matches while typing, only if it's possible to timeout.
-if has('reltime')
-	set incsearch
-endif
-
-" attempt to set colorscheme, suppress any errors on failure.
-silent! colorscheme nord
-
-" ensure that backups are copies, which allows webpack-dev-server to work.
-set backupcopy=yes
-
-" highlight all search matches.
-set hlsearch
-
-" indent to same level as previous line.
-set autoindent
-
-" set the tab size to 4 characters.
-set tabstop=4
-
-" adjust indents by 4 characters.
-set shiftwidth=4
-
-" expand tab presses into spaces.
-set expandtab
-
-" allow backspacing over everything in insert mode.
-set backspace=indent,eol,start
-
-" disable incrementing of octal numbers to create better decimal experience.
-set nrformats-=octal
-
-" set timeout for keycodes, and wait up to 100ms.
-set ttimeout
-set ttimeoutlen=100
-
-" show as much as possible of truncated lines.
-set display+=lastline
-
-" set the minimal number of lines to show around the cursor.
-set scrolloff=3
-set sidescrolloff=3
-
-" always show a status line.
-set laststatus=2
-
-" display command completion matches in the status line.
-set wildmenu
-
-" ignore completion matches which matches these patterns.
-set wildignore+=*/.git/*,*/.hg/*,*/.svn/*
-set wildignore+=*/node_modules/*
-
-" characters to show hidden characters when in list mode.
-set listchars=tab:>\ ,trail:-,nbsp:+,extends:>,precedes:<
-
-" new splits are placed below or to the right of the current buffer.
-set splitright
-set splitbelow
-
-" show line numbers.
-set number
-
-" highlight the line that the cursor is on.
-set cursorline
-
-" allow lines longer than the window to wrap.
-set wrap
-
-" set the languages used for spelling.
-set spelllang=en_au,en_gb
-
-" highlight these keywords in comments.
-autocmd Syntax * call matchadd('Todo',  '\W\zs\(NOTE\|INFO\|IDEA\|TODO\|CHANGED\)')
-autocmd Syntax * call matchadd('Debug', '\W\zs\(FIXME\|XXX\|BUG\|HACK\)')
+set directory=$HOME/.vim/swap//
 
 
-"   B I N D I N G S
+"   M A P P I N G S
 
-" set the leader key to space for quick access.
-noremap <space> <nop>
-let mapleader = "\<space>"
+" Set the leader key to <Space>.
+noremap <Space> <Nop>
+let mapleader = "\<Space>"
 
-" disable the use of arrow keys.
-noremap <up> <nop>
-noremap <down> <nop>
-noremap <left> <nop>
-noremap <right> <nop>
+" Allow <C-c> to function as <Esc>.
+noremap <C-c> <Esc>
 
-" make the command buffer easier to access.
-noremap ; :
-
-" reselect selection after indent command.
-vnoremap < <gv
-vnoremap > >gv
-
-" give ctrl-c the same functionality as escape.
-noremap <c-c> <esc>
-
-" allow easier split navigation.
-noremap <c-j> <c-w>j
-noremap <c-k> <c-w>k
-noremap <c-l> <c-w>l
-noremap <c-h> <c-w>h
-
-" move through wrapped lines, instead of actual lines.
+" Move through wrapped lines, instead of acutal lines.
 noremap j gj
 noremap k gk
+
+" Allow easier split navigation with these shortcuts.
+noremap <C-j> <C-w>j
+noremap <C-k> <C-w>k
+noremap <C-l> <C-w>l
+noremap <C-h> <C-w>h
 
 
 "   S O U R C E
 
-" load local hook for device specific configuration.
-" NOTE: this needs to be sourced at the bottom of the file.
+" Load local hook for device specific configuration.
+" This needs to be sourced at the bottom of the file.
 if !empty(glob("$HOME/.vimrc.local"))
     source $HOME/.vimrc.local
 endif
