@@ -1,5 +1,0 @@
-#   . B A S H _ P R O F I L E
-
-
-# Use the same configuration for both logon and non-logon shells.
-[[ -f ~/.bashrc ]] && . ~/.bashrc

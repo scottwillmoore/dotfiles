@@ -1,8 +1,3 @@
-# . D I R C O L O R S
-
-
-#   T E R M C A P
-
 TERM ansi
 TERM color-xterm
 TERM color_xterm
@@ -77,37 +72,34 @@ TERM xterm-debian
 TERM xterm-new
 TERM xterm-termite
 
-
-#   F I L E S Y S T E M
-
-# default.
+# Default
 RESET 00
 NORMAL 00
 
-# files.
+# Files
 FILE 00
 EXEC 04
 SETUID 01;04
 SETGID 01;04
 CAPABILITY 01
 
-# directories.
+# Directories
 DIR 34
 STICKY 01;34
 OTHER_WRITABLE 04;34
 STICKY_OTHER_WRITABLE 01;04;34
 
-# symbolic links.
+# Symbolic links
 LINK 36
 MULTIHARDLINK 04;36
 ORPHAN 31
 MISSING 37;41
 
-# inter-process communication.
+# Inter-process communication
 FIFO 01;33
 SOCK 01;33
 DOOR 01;33
 
-# devices.
+# Devices
 BLK 04;33
 CHR 33
