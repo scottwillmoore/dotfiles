@@ -1,2 +1,11 @@
+[alias]
+    a = add
+    c = commit
+    l = log --graph --oneline
+    p = push
+    s = status
 [core]
-    editor=vim
+    editor = "nvim"
+[user]
+    name = "Scott Moore"
+    email = "scott.will.moore@gmail.com"
