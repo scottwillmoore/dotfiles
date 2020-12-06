@@ -1,6 +1,7 @@
 [alias]
     a = add
     c = commit
+    d = diff
     l = log --graph --oneline
     p = push
     s = status
