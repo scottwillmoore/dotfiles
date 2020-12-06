@@ -77,6 +77,12 @@ export PS1="\w \$ "
 # Initialize the starship prompt if it is installed
 if command -v starship &> /dev/null; then
     eval "$(starship init bash)"
+
+    function set_window_title {
+        echo -ne "\033]0;$(dirs +0)\007"
+    }
+
+    starship_precmd_user_func="set_window_title"
 fi
 
 # Load local bashrc for device specific configuration
