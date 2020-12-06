@@ -1,59 +1,7 @@
-# Exit if this is a non-interactive prompt.
+# Exit if this is a non-interactive prompt
 [[ -z $PS1 ]] && return
 
-# Enable bash completion.
-[[ -x /etc/bash_completion ]] && . /etc/bash_completion
-[[ -x /etc/profile.d/bash_completion.sh ]] && . /etc/profile.d/bash_completion.sh
-
-# Load dircolors.
-[[ -x ~/.dircolors ]] && eval $(dircolors ~/.dircolors)
-
-# Execution of a directory will change into that directory.
-shopt -s autocd
-
-# Minor errors in spelling of directories are corrected.
-shopt -s cdspell
-
-# Allow ** to be used for recursive directory expansion.
-shopt -s globstar
-
-# Treat path expansion as case-insensitive.
-shopt -s nocaseglob
-
-# Append to the history file, don't overwrite it.
-shopt -s histappend
-
-# Add user binaries in ~/bin to the path.
-export PATH="$HOME/bin:$PATH"
-
-# Set the default text editor to Vim.
-export EDITOR=vim
-export VISUAL=vim
-
-# Increase the size of the bash history.
-export HISTSIZE=32768
-export HISTFILESIZE=${HISTSIZE}
-
-# Omit duplicates entries in bash history.
-export HISTCONTROL=ignoredups
-
-# Set minimal prompt.
-export PS1="\w \$ "
-
-# Allow sudo to be used with other aliases.
-alias sudo='sudo '
-
-# Shortcuts for traversing up directories.
-alias ..='cd ..'
-alias ...='cd ../..'
-alias ....='cd ../../..'
-alias .....='cd ../../../..'
-
-# Shortcuts for listing directory contents.
-alias la='ls -A'
-alias ll='ls -Ahl'
-
-# Use colored man pages.
+# Use colored man pages
 function man {
     LESS_TERMCAP_me=$(tput sgr0) \
     LESS_TERMCAP_md=$(tput bold) \
@@ -64,6 +12,73 @@ function man {
     command man "$@"
 }
 
-# Load local bashrc for device specific configuration.
+# Allow execution of directories to change into them
+shopt -s autocd
+
+# Fix minor spelling errors in directories
+shopt -s cdspell
+
+# Allow ** to be used for recursive directory expansion
+shopt -s globstar
+
+# Treat path expansion as case-insensitive
+shopt -s nocaseglob
+
+# Append to the history file, don't overwrite it
+shopt -s histappend
+
+# Allow sudo to be used with other aliases
+alias sudo='sudo '
+
+# Create shortcuts for common programs
+alias l='ls'
+alias c='code'
+alias g='git'
+alias n='nvim'
+alias v='vim'
+
+# Create shortcuts for traversing up directories
+alias ..='cd ..'
+alias ...='cd ../..'
+alias ....='cd ../../..'
+alias .....='cd ../../../..'
+
+# Create shortcuts for listing directory contents
+alias la='ls -A'
+alias ll='ls -Ahl'
+
+# Add user binaries to the path
+export PATH="$HOME/bin:$PATH"
+
+# Set the default text editor to Vim
+export EDITOR=vim
+export VISUAL=vim
+
+# Increase the size of the bash history
+export HISTSIZE=32768
+export HISTFILESIZE=${HISTSIZE}
+
+# Omit duplicates entries in bash history
+export HISTCONTROL=ignoredups
+
+# Set minimal prompt
+export PS1="\w \$ "
+
+# Enable bash completion
+[[ -x /etc/bash_completion ]] && . /etc/bash_completion
+[[ -x /etc/profile.d/bash_completion.sh ]] && . /etc/profile.d/bash_completion.sh
+
+# Load configuration for dircolors
+[[ -x ~/.dircolors ]] && eval $(dircolors ~/.dircolors)
+
+# Add rust to environment
+[[ -f ~/.cargo/env ]] && . ~/.cargo/env
+
+# Initialize the starship prompt if it is installed
+if command -v starship &> /dev/null; then
+    eval "$(starship init bash)"
+fi
+
+# Load local bashrc for device specific configuration
 [[ -x ~/.bashrc.local ]] && . ~/.bashrc.local
 
