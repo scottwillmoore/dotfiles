@@ -1,8 +1,7 @@
 #!/usr/bin/env python
 
+
 from argparse import ArgumentParser
-import ctypes
-from ctypes import wintypes
 import os
 from pathlib import Path
 import platform
@@ -27,44 +26,46 @@ def is_windows():
     return platform.system() == "Windows"
 
 
-def is_administrator():
-    assert is_windows(), "Platform must be Windows"
-    return ctypes.windll.shell32.IsUserAnAdmin() != 0
+if is_windows():
+    import ctypes
+    from ctypes import wintypes
 
+    def is_administrator():
+        return ctypes.windll.shell32.IsUserAnAdmin() != 0
 
-# https://stackoverflow.com/questions/41231586/how-to-detect-if-developer-mode-is-active-on-windows-10
-def is_developer_mode_enabled():
-    HKEY_LOCAL_MACHINE = 0x80000002
-    KEY_READ = 0x20019
-    ERROR_SUCCESS = 0
+    # https://stackoverflow.com/questions/41231586/how-to-detect-if-developer-mode-is-active-on-windows-10
+    def is_developer_mode_enabled():
+        HKEY_LOCAL_MACHINE = 0x80000002
+        KEY_READ = 0x20019
+        ERROR_SUCCESS = 0
 
-    key = wintypes.HKEY()
-    error = ctypes.windll.advapi32.RegOpenKeyExW(
-        HKEY_LOCAL_MACHINE,
-        r"SOFTWARE\Microsoft\Windows\CurrentVersion\AppModelUnlock",
-        0,
-        KEY_READ,
-        ctypes.byref(key),
-    )
-    if error != ERROR_SUCCESS:
-        return False
+        key = wintypes.HKEY()
+        error = ctypes.windll.advapi32.RegOpenKeyExW(
+            HKEY_LOCAL_MACHINE,
+            r"SOFTWARE\Microsoft\Windows\CurrentVersion\AppModelUnlock",
+            0,
+            KEY_READ,
+            ctypes.byref(key),
+        )
+        if error != ERROR_SUCCESS:
+            return False
 
-    value = wintypes.DWORD()
-    value_size = wintypes.DWORD(ctypes.sizeof(value))
-    error = ctypes.windll.advapi32.RegQueryValueExW(
-        key,
-        r"AllowDevelopmentWithoutDevLicense",
-        None,
-        None,
-        ctypes.byref(value),
-        ctypes.byref(value_size),
-    )
-    if error != ERROR_SUCCESS:
-        return False
+        value = wintypes.DWORD()
+        value_size = wintypes.DWORD(ctypes.sizeof(value))
+        error = ctypes.windll.advapi32.RegQueryValueExW(
+            key,
+            r"AllowDevelopmentWithoutDevLicense",
+            None,
+            None,
+            ctypes.byref(value),
+            ctypes.byref(value_size),
+        )
+        if error != ERROR_SUCCESS:
+            return False
 
-    ctypes.windll.advapi32.RegCloseKey(key)
+        ctypes.windll.advapi32.RegCloseKey(key)
 
-    return value != 0
+        return value != 0
 
 
 def is_mac():
@@ -79,9 +80,10 @@ def is_posix_compliant():
     return is_mac() or is_linux()
 
 
-def is_root():
-    assert is_posix_compliant(), "Platform must be POSIX compliant"
-    return os.getuid() == 0
+if is_posix_compliant():
+
+    def is_root():
+        return os.getuid() == 0
 
 
 class Platform:
@@ -119,8 +121,9 @@ class Filesystem:
         except FileNotFoundError:
             raise FilesystemError("The source path must exist")
 
-        if not source.is_relative_to(self.sourceDirectory):
-            raise FilesystemError("The source path must be relative to the source directory")
+        # 'is_relative_to' is only supported in Python 3.9+...
+        # if not source.is_relative_to(self.sourceDirectory):
+        #     raise FilesystemError("The source path must be relative to the source directory")
 
         return source
 
@@ -252,8 +255,12 @@ if __name__ == "__main__":
     arguments = parser.parse_args()
 
     if is_windows():
-        if not (is_administrator() or (is_developer_mode_enabled() and python_version() > (3, 8, 0))):
-            raise SystemExit("The script must be run as an administrator or with developer mode enabled")
+        if not (
+            is_administrator() or (is_developer_mode_enabled() and python_version() > (3, 8, 0))
+        ):
+            raise SystemExit(
+                "The script must be run as an administrator or with developer mode enabled"
+            )
 
     filesystem = Filesystem(
         "files",
@@ -279,8 +286,12 @@ if __name__ == "__main__":
             "~/Documents/WindowsPowerShell/Microsoft.Powershell_profile.ps1",
         )
 
-        windowsTerminalPath = filesystem.find("~/AppData/Local/Packages/*WindowsTerminal*/LocalState")
+        windowsTerminalPath = filesystem.find(
+            "~/AppData/Local/Packages/*WindowsTerminal*/LocalState"
+        )
         if windowsTerminalPath:
-            filesystem.make_hard_link("windows_terminal.json", windowsTerminalPath / Path("settings.json"))
+            filesystem.make_hard_link(
+                "windows_terminal.json", windowsTerminalPath / Path("settings.json")
+            )
 
     print()
