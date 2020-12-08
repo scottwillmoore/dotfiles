@@ -48,7 +48,7 @@ read_only = '*'
 read_only_style = 'bold red'
 style = 'bold cyan'
 truncation_length = 3
-truncation_symbol = '.../'
+truncation_symbol = '...'
 
 [git_branch]
 style = 'bold purple'

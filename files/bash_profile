@@ -12,6 +12,11 @@ function man {
     command man "$@"
 }
 
+# Enable Vi mode
+set -o vi
+bind -m vi-insert "Control-l: clear-screen"
+bind -m vi-command "Control-l: clear-screen"
+
 # Allow execution of directories to change into them
 shopt -s autocd
 
