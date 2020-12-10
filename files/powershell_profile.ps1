@@ -127,10 +127,10 @@ function Set-CursorStyle {
         $CursorCode = $CursorCode - 1
     }
 
-    $EscapeCode = [char] 27;
-    Write-Host -NoNewline "$EscapeCode[$CursorCode q"
+    Write-Host -NoNewline "$([char] 27)[$CursorCode q"
 }
 
+$Script:CursorStyle = "Bar"
 $PSReadLineOptions = @{
     EditMode            = "Vi"
     ViModeIndicator     = "Script"
@@ -175,17 +175,24 @@ function Prompt {
         default { $Current }
     }
 
-    Set-Title $Path
-
-    if ($Script:CursorStyle) {
-        Set-CursorStyle $Script:CursorStyle
-    }
-
     if ($Script:StarshipPrompt) {
         & $Script:StarshipPrompt
     }
     else {
         "$Path $ "
+    }
+
+    if ($Script:StarshipPrompt) {
+        $Regex = "($([char] 155)|$([char] 27)\[)[0-?]*[ -\/]*[@-~]"
+        $Title = & starship module directory
+        Set-Title ($Title -replace $Regex, "")
+    }
+    else {
+        Set-Title $Path
+    }
+
+    if ($Script:CursorStyle) {
+        Set-CursorStyle $Script:CursorStyle
     }
 }
 

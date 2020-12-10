@@ -6,7 +6,7 @@
     p = push
     s = status
 [core]
-    editor = "nvim"
+    editor = nvim
 [user]
     name = "Scott Moore"
     email = "scott.will.moore@gmail.com"
