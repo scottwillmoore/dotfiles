@@ -1,112 +1,37 @@
-" . V I M R C
-
-
-"   P L U G I N S
-
-" Install vim-plug if it is not already installed.
-if empty(glob($HOME.'/.vim/autoload/plug.vim'))
-	silent !curl -fLo "$HOME/.vim/autoload/plug.vim" --create-dirs
-		\ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-	autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
-endif
-
-" Install and configure plugins.
-call plug#begin()
-
-" A lightweight status line replacement.
-Plug 'itchyny/lightline.vim'
-
-call plug#end()
-
-
-"   O P T I O N S
-
-set nocompatible    " Disable Vi compatibility mode.
-
-set wrap            " Wrap longer lines onto the next line.
-set ruler           " Show the line and column of the cursor position.
-set number          " Precede each line with its line number.
-
-set scrolloff=3     " Minimal number of lines to keep above, below of the cursor.
-set sidescrolloff=3 " Minimal number of lines to keep left, right of the cursor.
-set laststatus=2    " Always show a status line.
-
-set autoindent      " New lines use indentation from previous lines.
-set smartindent     " Use additional rules to determine when to indent.
-
-set hlsearch        " Highlight all matches of the search pattern.
-set incsearch       " Highlight matches as search patterns are typed.
-set ignorecase      " Ignore the case of search patterns.
-set smartcase       " Only ignore the case while the search pattern contains lowercase letters.
-
-set expandtab       " Expand <Tab> into spaces.
-set tabstop=4       " The number of spaces that a <Tab> is equivelent.
-set softtabstop=4   " The number of spaces that are inserted on <Tab>.
-set shiftwidth=4    " The number of spaces used for indentation.
-
-set splitright      " New vertical splits are placed right not left.
-set splitbelow      " New horizontal splits are placed below not above.
-
-" Make backspace work as expected.
-set backspace=indent,eol,start
-
-" Set the spelling language to Australian English.
+set autoindent
+set backspace=eol,indent,start
+set belloff=all
+set encoding=utf-8
+set expandtab
+set foldopen=mark,search,tag,undo
+set hidden
+set ignorecase
+set incsearch
+set laststatus=2
+set listchars=tab:»\ ,extends:›,precedes:‹,nbsp:·,trail:·
+set mouse=a
+set nohlsearch
+set noshowmode
+set nowrap
+set number
+set relativenumber
+set ruler
+set scrolloff=4
+set shiftwidth=4
+set sidescrolloff=4
+set smartcase
+set smartindent
+set softtabstop=4
 set spelllang=en_au,en_gb
+set splitbelow
+set splitright
+set tabstop=4
+set wildmenu
 
-" Use these characters to display hidden characters.
-set listchars=tab:>\ ,trail:-,nbsp:+,extends:>,precedes:<
-
-" Enable syntax highlighting.
-if has('syntax') && !exists('g:syntax_on')
-    syntax enable
-endif
-
-" Enable filetype detection and specific indentation.
-if has('autocmd')
-	filetype plugin indent on
-endif
-
-" Enable mouse interactivity in all modes.
-if has('mouse')
-endif
-
-" Set a better backup directory. Create it if it does not exist.
-if !isdirectory($HOME.'/.vim/backup')
-    silent call mkdir($HOME.'/.vim/backup', 'p')
-endif
-set backupdir=$HOME/.vim/backup//
-
-" Set a better swap directory. Create it if it does not exist.
-if !isdirectory($HOME.'/.vim/swap')
-    silent call mkdir($HOME.'/.vim/swap', 'p')
-endif
-set directory=$HOME/.vim/swap//
-
-
-"   M A P P I N G S
-
-" Set the leader key to <Space>.
-noremap <Space> <Nop>
-let mapleader = "\<Space>"
-
-" Allow <C-c> to function as <Esc>.
+noremap <Space> <Leader>
 noremap <C-c> <Esc>
-
-" Move through wrapped lines, instead of acutal lines.
 noremap j gj
 noremap k gk
 
-" Allow easier split navigation with these shortcuts.
-noremap <C-j> <C-w>j
-noremap <C-k> <C-w>k
-noremap <C-l> <C-w>l
-noremap <C-h> <C-w>h
-
-
-"   S O U R C E
-
-" Load local hook for device specific configuration.
-" This needs to be sourced at the bottom of the file.
-if !empty(glob("$HOME/.vimrc.local"))
-    source $HOME/.vimrc.local
-endif
+filetype plugin indent on
+syntax on
