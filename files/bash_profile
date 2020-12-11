@@ -1,98 +1,58 @@
-# Exit if this is a non-interactive prompt
 [[ -z $PS1 ]] && return
 
-# Use colored man pages
-function man {
-    LESS_TERMCAP_me=$(tput sgr0) \
-    LESS_TERMCAP_md=$(tput bold) \
-    LESS_TERMCAP_so=$(tput smso) \
-    LESS_TERMCAP_se=$(tput rmso; tput sgr0) \
-    LESS_TERMCAP_us=$(tput smul) \
-    LESS_TERMCAP_ue=$(tput rmul; tput sgr0) \
-    command man "$@"
-}
+[[ -f /etc/bash_completion ]] && source /etc/bash_completion
+[[ -f /etc/profile.d/bash_completion.sh ]] && source /etc/profile.d/bash_completion.sh
+[[ -f ~/.cargo/env ]] && source ~/.cargo/env
+[[ -f ~/.dircolors ]] && eval "$(dircolors ~/.dircolors)"
 
-# Enable Vi mode
-set -o vi
-bind -m vi-insert "Control-l: clear-screen"
-bind -m vi-command "Control-l: clear-screen"
-
-# Allow execution of directories to change into them
-shopt -s autocd
-
-# Fix minor spelling errors in directories
-shopt -s cdspell
-
-# Allow ** to be used for recursive directory expansion
-shopt -s globstar
-
-# Treat path expansion as case-insensitive
-shopt -s nocaseglob
-
-# Append to the history file, don't overwrite it
-shopt -s histappend
-
-# Allow sudo to be used with other aliases
-alias sudo='sudo '
-
-# Create shortcuts for common programs
-alias l='ls'
-alias c='code'
-alias g='git'
-alias n='nvim'
-alias v='vim'
-
-# Create shortcuts for traversing up directories
-alias ..='cd ..'
-alias ...='cd ../..'
-alias ....='cd ../../..'
-alias .....='cd ../../../..'
-
-# Create shortcuts for listing directory contents
-alias la='ls -A'
-alias ll='ls -Ahl'
-
-# Add user binaries to the path
-export PATH="$HOME/bin:$PATH"
-
-# Set the default text editor to Vim
-export EDITOR=vim
-export VISUAL=vim
-
-# Increase the size of the bash history
-export HISTSIZE=32768
-export HISTFILESIZE=${HISTSIZE}
-
-# Omit duplicates entries in bash history
-export HISTCONTROL=ignoredups
-
-# Set minimal prompt
-export PS1="\w \$ "
-
-# Enable bash completion
-[[ -x /etc/bash_completion ]] && . /etc/bash_completion
-[[ -x /etc/profile.d/bash_completion.sh ]] && . /etc/profile.d/bash_completion.sh
-
-# Load configuration for dircolors
-[[ -x ~/.dircolors ]] && eval $(dircolors ~/.dircolors)
-
-# Add rust to environment
-[[ -f ~/.cargo/env ]] && . ~/.cargo/env
-
-# Initialize the starship prompt if it is installed
 if command -v starship &> /dev/null; then
     eval "$(starship init bash)"
 
-    function set_window_title {
+    function set_window_title() {
         local regex="(\x9B|\x1B\[)[0-?]*[ -\/]*[@-~]"
         local title="$(starship module directory)"
         local stripped_title="$(echo -n "$title" | sed -E "s/$regex//g")"
-        echo -ne "\033]0;$stripped_title\007"
+        echo -ne "\e]0;$stripped_title\a"
     }
 
     starship_precmd_user_func="set_window_title"
 fi
 
-# Load local bashrc for device specific configuration
-[[ -x ~/.bashrc.local ]] && . ~/.bashrc.local
+shopt -s autocd
+shopt -s cdspell
+shopt -s globstar
+shopt -s nocaseglob
+shopt -s histappend
 
+export HISTCONTROL=ignoredups
+export HISTFILESIZE=${HISTSIZE}
+export HISTSIZE=32768
+
+export EDITOR=vim
+export VISUAL=vim
+
+export PATH="$HOME/bin:$PATH"
+
+export PS1="\w \$ "
+
+export LESS="--raw-control-chars"
+export LESS_TERMCAP_mb=$'\e[1;36m'
+export LESS_TERMCAP_md=$'\e[1;36m'
+export LESS_TERMCAP_me=$'\e[0m'
+export LESS_TERMCAP_se=$'\e[0m'
+export LESS_TERMCAP_so=$'\e[1;;31m'
+export LESS_TERMCAP_ue=$'\e[0m'
+export LESS_TERMCAP_us=$'\e[1;35m'
+
+alias grep='grep --color=auto'
+alias ls='ls --color=auto'
+
+alias sudo='sudo '
+
+alias c='code'
+alias g='git'
+alias l='ls'
+alias la='ls -A'
+alias ll='ls -Ahl'
+alias n='nvim'
+alias v='vim'

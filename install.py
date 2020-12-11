@@ -274,6 +274,7 @@ if __name__ == "__main__":
         filesystem.make_symbolic_link("bash_profile", "~/.bash_profile")
         filesystem.make_symbolic_link("bashrc", "~/.bashrc")
         filesystem.make_symbolic_link("dircolors", "~/.dircolors")
+        filesystem.make_symbolic_link("inputrc", "~/.inputrc")
         filesystem.make_symbolic_link("tmux.conf", "~/.tmux.conf")
 
     if is_windows():
