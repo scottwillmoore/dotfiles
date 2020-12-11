@@ -255,12 +255,8 @@ if __name__ == "__main__":
     arguments = parser.parse_args()
 
     if is_windows():
-        if not (
-            is_administrator() or (is_developer_mode_enabled() and python_version() > (3, 8, 0))
-        ):
-            raise SystemExit(
-                "The script must be run as an administrator or with developer mode enabled"
-            )
+        if not (is_administrator() or (is_developer_mode_enabled() and python_version() > (3, 8, 0))):
+            raise SystemExit("The script must be run as an administrator or with developer mode enabled")
 
     filesystem = Filesystem(
         "files",
@@ -286,12 +282,10 @@ if __name__ == "__main__":
             "~/Documents/WindowsPowerShell/Microsoft.Powershell_profile.ps1",
         )
 
-        windowsTerminalPath = filesystem.find(
-            "~/AppData/Local/Packages/*WindowsTerminal*/LocalState"
-        )
+        windowsTerminalPath = filesystem.find("~/AppData/Local/Packages/*WindowsTerminal*/LocalState")
         if windowsTerminalPath:
-            filesystem.make_hard_link(
-                "windows_terminal.json", windowsTerminalPath / Path("settings.json")
-            )
+            filesystem.make_hard_link("windows_terminal.json", windowsTerminalPath / Path("settings.json"))
+
+        filesystem.make_symbolic_link("vsvimrc", "~/.vsvimrc")
 
     print()

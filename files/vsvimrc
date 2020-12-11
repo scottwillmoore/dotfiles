@@ -1,0 +1,32 @@
+set autoindent
+set backspace=eol,indent,start
+set hlsearch
+set ignorecase
+set incsearch
+set nowrap
+set number
+set relativenumber
+set scrolloff=4
+set shiftwidth=4
+set smartcase
+
+noremap <C-c> <Esc>
+noremap j gj
+noremap k gk
+
+let mapleader="\<Space>"
+
+set laststatus=0
+set visualbell
+set vsvim_useeditordefaults
+set vsvim_useeditorindent
+set vsvimcaret=75
+
+noremap gD :vsc Edit.GoToDeclaration<CR>
+noremap gc :vsc Edit.ToggleComment<CR>
+noremap gd :vsc Edit.GoToDefinition<CR>
+
+noremap <Leader>f :vsc Edit.FormatDocument<CR>
+noremap <Leader>i :vsc Edit.QuickInfo<CR>
+noremap <Leader>p :vsc Edit.ParameterInfo<CR>
+noremap <Leader>r :vsc Refactor.Rename<CR>
