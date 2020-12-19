@@ -1,5 +1,7 @@
 # Dotfiles
 
+![Screenshot of my personal dotfiles](screenshot.png)
+
 These are my personal dotfiles for Windows and Linux.
 
 -   Bash
@@ -8,9 +10,10 @@ These are my personal dotfiles for Windows and Linux.
 -   Starship
 -   Tmux
 -   Vim
+-   VsVim
 -   Windows Terminal
 
-My Visual Studio Code settings and extensions are synced with the 'Settings Sync' with my GitHub account.
+My Visual Studio Code settings and extensions are synced with the 'Settings Sync' with my GitHub account. I have also been experimenting with Neovim, however I am sadly still finding it difficult to replace the support and features of Visual Studio Code.
 
 ## Install
 
