@@ -26,7 +26,10 @@ noremap gD :vsc Edit.GoToDeclaration<CR>
 noremap gc :vsc Edit.ToggleComment<CR>
 noremap gd :vsc Edit.GoToDefinition<CR>
 
+noremap <C-P> :vsc Edit.GotoFile<CR>
+
 noremap <Leader>f :vsc Edit.FormatDocument<CR>
+noremap <Leader>h :vsc EditorContextMenus.CodeWindow.ToggleHeaderCodeFile<CR>
 noremap <Leader>i :vsc Edit.QuickInfo<CR>
 noremap <Leader>p :vsc Edit.ParameterInfo<CR>
 noremap <Leader>r :vsc Refactor.Rename<CR>
