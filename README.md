@@ -2,7 +2,7 @@
 
 ![Screenshot of my personal dotfiles](screenshot.png)
 
-These are my personal dotfiles for Windows and Linux.
+These are my personal dotfiles for Windows and Linux. It currently includes configurations for:
 
 -   Bash
 -   Git
@@ -13,7 +13,9 @@ These are my personal dotfiles for Windows and Linux.
 -   VsVim
 -   Windows Terminal
 
-My Visual Studio Code settings and extensions are synced with the 'Settings Sync' with my GitHub account. I have also been experimenting with Neovim, however I am sadly still finding it difficult to replace the support and features of Visual Studio Code.
+Some notable features include Vim-like keybindings in Bash, PowerShell and Windows Terminal. A minimal Vim configuration for quick edits and SSH sessions. An awesome, efficient, personally-customized terminal prompt provided by Starship. A Gruvbox themed, light and dark themed Windows Terminal.
+
+I use the VsVim plugin for Visual Studio and I use the Vim plugin for Visual Studio Code. My Visual Studio Code settings and extensions are synced with the new 'Settings Sync' feature and are linked with my GitHub account. I have also been experimenting with Neovim, however I am sadly still finding it difficult to replace the support and features provided by Visual Studio Code.
 
 ## Install
 
