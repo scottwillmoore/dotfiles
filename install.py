@@ -278,6 +278,8 @@ if __name__ == "__main__":
         filesystem.make_symbolic_link("tmux.conf", "~/.tmux.conf")
 
     if is_windows():
+        filesystem.make_symbolic_link("alacritty.yml", "~/AppData/Roaming/alacritty/alacritty.yml")
+
         filesystem.make_symbolic_link(
             "powershell_profile.ps1",
             "~/Documents/WindowsPowerShell/Microsoft.Powershell_profile.ps1",
