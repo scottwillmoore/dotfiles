@@ -285,10 +285,11 @@ if __name__ == "__main__":
             "~/Documents/WindowsPowerShell/Microsoft.Powershell_profile.ps1",
         )
 
+        filesystem.make_symbolic_link("init.vim", "~/AppData/Local/nvim/init.vim")
+        filesystem.make_symbolic_link("vsvimrc", "~/.vsvimrc")
+
         windowsTerminalPath = filesystem.find("~/AppData/Local/Packages/*WindowsTerminal*/LocalState")
         if windowsTerminalPath:
             filesystem.make_hard_link("windows_terminal.json", windowsTerminalPath / Path("settings.json"))
-
-        filesystem.make_symbolic_link("vsvimrc", "~/.vsvimrc")
 
     print()
