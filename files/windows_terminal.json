@@ -8,7 +8,7 @@
         "defaults": {
             "colorScheme": "Gruvbox Dark",
             "cursorShape": "filledBox",
-            "fontFace": "Jetbrains Mono",
+            "fontFace": "JetBrains Mono",
             "fontSize": 14,
             "scrollbarState": "hidden"
         },

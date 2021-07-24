@@ -1,17 +1,21 @@
 call plug#begin()
 
+Plug 'gruvbox-community/gruvbox'
 Plug 'machakann/vim-sandwich'
 Plug 'unblevable/quick-scope'
 
 call plug#end()
 
+let mapleader=" "
+
+set background=dark
 set expandtab
 set foldopen=mark,search,tag,undo
 set hidden
-set nohlsearch
 set ignorecase
 set listchars=tab:»\ ,extends:›,precedes:‹,nbsp:·,trail:·
 set mouse=a
+set nohlsearch
 set number
 set scrolloff=4
 set shiftwidth=4
@@ -26,13 +30,13 @@ set splitright
 set tabstop=4
 set wrap
 
-let mapleader=" "
+colorscheme gruvbox
 
 if exists('g:vscode')
 
-xmap gc  <Plug>VSCodeCommentary
-nmap gc  <Plug>VSCodeCommentary
-omap gc  <Plug>VSCodeCommentary
+xmap gc <Plug>VSCodeCommentary
+nmap gc <Plug>VSCodeCommentary
+omap gc <Plug>VSCodeCommentary
 nmap gcc <Plug>VSCodeCommentaryLine
 
 highlight QuickScopePrimary guifg='#fbf1c7' gui=bold
