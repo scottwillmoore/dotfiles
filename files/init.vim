@@ -8,7 +8,6 @@ call plug#end()
 
 let mapleader=" "
 
-set background=dark
 set expandtab
 set foldopen=mark,search,tag,undo
 set hidden
@@ -30,16 +29,29 @@ set splitright
 set tabstop=4
 set wrap
 
-colorscheme gruvbox
+noremap Y y$
 
 if exists('g:vscode')
+    xmap gc <Plug>VSCodeCommentary
+    nmap gc <Plug>VSCodeCommentary
+    omap gc <Plug>VSCodeCommentary
+    nmap gcc <Plug>VSCodeCommentaryLine
 
-xmap gc <Plug>VSCodeCommentary
-nmap gc <Plug>VSCodeCommentary
-omap gc <Plug>VSCodeCommentary
-nmap gcc <Plug>VSCodeCommentaryLine
+    nnoremap k <Cmd>call VSCodeNotify('cursorMove', { 'to': 'up', 'by': 'wrappedLine', 'value': v:count ? v:count : 1 })<CR>
+    nnoremap j <Cmd>call VSCodeNotify('cursorMove', { 'to': 'down', 'by': 'wrappedLine', 'value': v:count ? v:count : 1 })<CR>
 
-highlight QuickScopePrimary guifg='#fbf1c7' gui=bold
-highlight QuickScopeSecondary gui=none
+    nnoremap gj j
+    nnoremap gk k
 
+    highlight QuickScopePrimary guifg='#fbf1c7' gui=bold
+    highlight QuickScopeSecondary gui=none
+else
+    set background=dark
+    colorscheme gruvbox
+
+    nnoremap j gj
+    nnoremap k gk
+
+    nnoremap gj j
+    nnoremap gk k
 endif
