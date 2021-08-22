@@ -5,6 +5,12 @@ else {
     Write-Host "Posh-Git is not installed"
 }
 
+$CondaExe = "~\Scoop\apps\miniconda3\current\Scripts\conda.exe"
+
+if (Test-Path $CondaExe) {
+    (& $CondaExe "shell.powershell" "hook") | Out-String | Invoke-Expression
+}
+
 function Hide-Dotfiles {
     Get-ChildItem -Filter ".*" |
         ForEach-Object { $_.Attributes = $_.Attributes -bor "Hidden" }

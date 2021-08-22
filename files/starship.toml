@@ -13,6 +13,7 @@ $git_branch\
 $git_commit\
 $git_state\
 $git_status\
+$conda\
 $package\
 
 $cmake\
@@ -42,6 +43,9 @@ $line_break\
 $character"""
 
 # Prefix
+
+[conda]
+symbol = 'conda '
 
 [directory]
 read_only = '*'
