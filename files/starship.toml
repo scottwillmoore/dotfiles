@@ -1,9 +1,9 @@
 add_newline = false
 
-# The format is divided into three components:
+# The format is divided into three sections:
 # - Prefix
-# - Postfix
 # - Languages
+# - Postfix
 
 format = """
 $username\
@@ -42,9 +42,17 @@ $cmd_duration\
 $line_break\
 $character"""
 
-# Prefix
+# Prefix and postfix
+
+[character]
+success_symbol = '[\$](bold green)'
+error_symbol = '[\$](bold red)'
+
+[cmd_duration]
+style = 'yellow'
 
 [conda]
+ignore_base = false
 symbol = 'conda '
 
 [directory]
@@ -58,9 +66,8 @@ truncation_symbol = '...'
 style = 'bold purple'
 symbol = ''
 
-# TODO: Fix issue where $tag has a leading space.
 [git_commit]
-commit_hash_length = 8
+commit_hash_length = 4
 format = '[\(($tag, )$hash\)]($style) '
 style = 'bold green'
 tag_disabled = false
@@ -69,21 +76,9 @@ tag_symbol = ''
 [git_state]
 format = '[\($state ($progress_current of $progress_total)\)]($style) '
 
-# TODO: Understand the different git statuses.
-[git_status]
-
 [package]
 style = 'bold yellow'
 symbol = ''
-
-# Postfix
-
-[character]
-success_symbol = '[\$](bold green)'
-error_symbol = '[\$](bold red)'
-
-[cmd_duration]
-style = 'yellow'
 
 # Languages
 
