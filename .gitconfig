@@ -1,0 +1,6 @@
+[alias]
+	dotfiles = !git --git-dir=$HOME/.dotfiles --work-tree=$HOME
+
+[user]
+	email = scott.will.moore@gmail.com
+	name = Scott Moore
